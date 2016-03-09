@@ -3,16 +3,9 @@
 # To be used as custom command (instead of default shell) in terminal emulator profile.
 # Not suitable for default profile as it will not work with '-e' (execute).
 
-# Use case:
-# I want to be able to launch terminal and have my current tmux session attached
-# automatically.
-# When there is no tmux session running, new session should be started.
-# When I open new window or tab, I just want to start shell (there's no point in
-# attaching the same session again).
-# I.e.:
-# if tmux is not running, start tmux
-# if tmux is running and no session is attached, attach session
-# if tmux is running and session is attached, start shell
+# If tmux is not running, start tmux.
+# If tmux is running and no session is attached, attach session.
+# If tmux is running and session is attached, start shell.
 
 # Usage: create new profile (named e.g. "tmux") and set this script as its 'custom command'.
 # Start terminal emulator with this profile - e.g. roxterm -p tmux
