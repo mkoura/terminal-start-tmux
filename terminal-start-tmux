@@ -10,16 +10,20 @@
 # Usage: create new profile (named e.g. "tmux") and set this script as its 'custom command'.
 # Start terminal emulator with this profile - e.g. roxterm -p tmux
 
-export TERM=xterm-256color
+SESSION_NAME="${1:-0}"
 
-sessions="$(tmux ls)"
-if [ "$?" -eq 0 ]; then
-  case "$sessions" in
-    *attached*)
-      exec /bin/bash ;;
-    *)
-      exec tmux attach ;;
-  esac
-else
-  exec tmux
-fi
+export TERM=xterm-256color
+USER_SHELL="$(getent passwd "$(id -u)")"
+USER_SHELL="${USER_SHELL##*:}"
+
+session="$(tmux ls | \
+  while read line; do case "$line" in ${SESSION_NAME}:*) echo "$line"; break ;; esac; done)"
+
+case "$session" in
+  ${SESSION_NAME}:*attached*)
+    exec "$USER_SHELL" ;;
+  ${SESSION_NAME}:*)
+    exec tmux attach-session -t "$SESSION_NAME" ;;
+  *)
+    exec tmux new-session -s "$SESSION_NAME" ;;
+esac
