@@ -1,3 +1,5 @@
+# Moved to https://gitlab.com/mkourim/terminal-start-tmux
+
 Script I use to start tmux or attach existing tmux session automatically with roxterm (can be used with any terminal emulator).
 
 Usage:
